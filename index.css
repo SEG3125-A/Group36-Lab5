@@ -1,21 +1,29 @@
 body {
-    background-color: #f8f9fa; /* Add your desired body background color */
+    background-color: #f8f9fa;
+    /* Add your desired body background color */
 }
-header{
+
+header {
     position: fixed;
     width: 100%;
-    top:0;
+    top: 0;
     z-index: 1000;
 }
 
 .container.text-center {
-    background-color: black; /* Set the background color to black */
-    width: 100vw; /* Use 100vw for 100% viewport width */
-    padding-left: 0; /* Remove default padding */
-    padding-right: 0; /* Remove default padding */
+    background-color: black;
+    /* Set the background color to black */
+    width: 100vw;
+    /* Use 100vw for 100% viewport width */
+    padding-left: 0;
+    /* Remove default padding */
+    padding-right: 0;
+    /* Remove default padding */
 }
 
-#servcices, #barber, #appointment{
+#servcices,
+#barber,
+#appointment {
     margin-top: 60px;
 }
 
@@ -31,43 +39,54 @@ section h2 {
 
 .card {
     width: 200px;
-    height:400px;
-}
-.card-img-top{
-    height:50%;
-}
-#services .btn.btn-primary,
- #barbers .btn.btn-primary{
-    position: absolute;
-    bottom:20px;
+    height: 400px;
 }
 
-#appointment a{
-    color:white;
+.card-img-top {
+    height: 50%;
+}
+
+#services .btn.btn-primary,
+#barbers .btn.btn-primary {
+    position: absolute;
+    bottom: 20px;
+}
+
+#appointment a {
+    color: white;
     text-decoration: none;
 }
 
-#serviceDetail, #barberDetail{
-    color:rgb(13, 45, 142);
+#serviceDetail,
+#barberDetail {
+    color: rgb(13, 45, 142);
     text-transform: uppercase;
 }
 
-#errorText{
+#errorText {
     display: none;
     background-color: rgb(241, 132, 132);
     margin-top: 5PX;
     padding: 2px;
-    color:white;
+    color: white;
     border-radius: 5px;
     text-align: center;
     font-size: 20px;
 }
-#paymentError{
+
+#paymentError {
     display: none;
     color: rgb(175, 6, 6);
     font-size: 20px;
 }
-.form-control:focus{
+
+.form-control:focus {
     background-color: rgb(231, 235, 235);
-    color:black;
+    color: black;
+}
+
+a.nav-link.active {
+
+    font-weight: bold;
+    /* Add any additional styling for the active state */
 }

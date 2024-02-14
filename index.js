@@ -334,4 +334,46 @@ function checkPaymentMethod(){
 }
 
 
+//this is for the nav bar, highlights when we are on the area
+document.addEventListener('DOMContentLoaded', function () {
+    // Get all the navigation links
+    var navLinks = document.querySelectorAll('.navbar-nav a.nav-link');
+
+    // Function to check if an element is mostly in the viewport
+    function isElementMostlyInViewport(el) {
+        var rect = el.getBoundingClientRect();
+        var threshold = 0.5; // Adjust this value to set the threshold for visibility
+
+        return (
+            rect.top + rect.height * threshold >= 0 &&
+            rect.left + rect.width * threshold >= 0 &&
+            rect.bottom - rect.height * threshold <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right - rect.width * threshold <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    // Function to handle scroll events
+    function handleScroll() {
+        // Loop through each navigation link
+        navLinks.forEach(function (link) {
+            // Get the target section for each link
+            var targetId = link.getAttribute('href').substring(1);
+            var targetSection = document.getElementById(targetId);
+
+            // Add or remove the 'active' class based on whether the section is mostly in the viewport
+            if (isElementMostlyInViewport(targetSection)) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    // Add a scroll event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Trigger the scroll event initially to highlight the correct section on page load
+    handleScroll();
+});
+
 
