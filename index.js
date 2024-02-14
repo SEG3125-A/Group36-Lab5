@@ -225,7 +225,14 @@ function createBarberCard(barber) {
 
 window.addEventListener("DOMContentLoaded", renderCards);
 
+//the portion code necessaary to trigger the tooltips
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
+
+//Submit appointment by checking payment method and appointment details
 function submitAppointment() {
 
     checkPaymentMethod();
@@ -234,6 +241,8 @@ function submitAppointment() {
     }
 
 }
+
+//check the appointment details
 function checkAppointmentDetails(){
     if(serviceName=="" || barberName==""){
         $("#errorText").text(" Select a service and a barber");
@@ -289,9 +298,12 @@ $(document).ready(function(){
     });
 })
 
+
+//check the payment method
 function checkPaymentMethod(){
+    ///^(\d{16})$/;
     //inputField.value = "xx".repeat(inputField.value.length);
-    const cardNumberPattern=/^(\d{16})$/;
+    const cardNumberPattern=/^(\d{4}[ ]?\d{4}[ ]?\d{4}[ ]?\d{4})$/;
     const cardCvcPatterm=/^(\d{3})$/;
     cardHolderName=$("#cardHolder").val();
     cardNumber=$("#cardNumber").val();
@@ -317,7 +329,9 @@ function checkPaymentMethod(){
     }
     $("#paymentError").hide();
     cardValidated=true;
-    //create a green icon for validating payment
+    //think about creating a green icon for validating payment
     return true;
 }
+
+
 
