@@ -298,6 +298,10 @@ $(document).ready(function(){
     });
 })
 
+$("#inputDate4").datepicker({
+    daysOfWeekDisabled: "1,2"
+});
+
 
 //check the payment method
 function checkPaymentMethod(){
