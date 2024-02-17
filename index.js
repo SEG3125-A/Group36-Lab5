@@ -276,7 +276,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 function submitAppointment() {
 
     checkPaymentMethod();
-    if(checkPaymentMethod()){
+    if (cardValidated){
         checkAppointmentDetails();
     }
 
@@ -324,6 +324,9 @@ function checkAppointmentDetails(){
     // Clear the form
     document.getElementById("appointmentForm").reset();
 
+    //clear the 
+    $("#payment").hide();
+
     // Show the confirmation modal
     $('#confirmationModal').modal('show');
 }
@@ -355,7 +358,7 @@ function checkPaymentMethod(){
         $("#payment").html("<i>Wrong card number</i>");
         $("#payment").show();
         cardValidated=false;
-        return false;
+        return;
     }
 
     //check the card cvc
@@ -363,7 +366,7 @@ function checkPaymentMethod(){
         $("#payment").html("<i>Wrong CVC format</i>");
         $("#payment").show();
         cardValidated=false;
-        return false;
+        return;
     }
 
     //check if there is no empty input
@@ -371,14 +374,12 @@ function checkPaymentMethod(){
         $("#payment").html("<i>Complete payment method</i>");
         $("#payment").show();
         cardValidated=false;
-        return false;
+        return;
     }
     $("#payment").html("<i>Card validated</i>");
     $("#payment").css("color", "rgb(53, 213, 82)");
     $("#payment").show();
     cardValidated=true;
-    //think about creating a green icon for validating payment
-    return true;
 }
 
 
