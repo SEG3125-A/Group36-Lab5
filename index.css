@@ -74,10 +74,11 @@ section h2 {
     font-size: 20px;
 }
 
-#paymentError {
+#payment {
     display: none;
-    color: rgb(175, 6, 6);
     font-size: 20px;
+    margin-top: 20px;
+
 }
 
 .form-control:focus {

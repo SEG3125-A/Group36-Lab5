@@ -5,6 +5,7 @@ let barberPicked;
 //Info relative to the appointment
 let serviceName="";
 let barberName="";
+let barberId=3;
 let cardHolderName;
 let cardNumber;
 let cvc;
@@ -14,6 +15,9 @@ let firstName;
 let lastName;
 let phoneNumber;
 let cardValidated;
+
+
+
 
 //All srevices
 let allServices=[
@@ -51,29 +55,61 @@ let allServices=[
 //All barbers
 let allBarbers=[
     {
+        id:0,
         name:"Adrian Hayes",
         description:["Barber specializing in Men's cuts"],
         picture:"images/barberA.jpg",
+        unavailableDays: [1,4],
     },
 
     {
+        id:1,
         name:"Gavin Thompson",
         description:["Barber specializing in dying hair"],
         picture:"images/barberB.png",
+        unavailableDays: [6,7],
     },
 
     {
+        id:2,
         name:"Ethan Marshall",
         description:["Barber specializing in styling long hair"],
         picture:"images/barberC.jpeg",
+        unavailableDays: [3,5],
     },
     {
+        id:3,
         name:"Marcus Rodriguez",
         description:["Barber specializing in women's cuts"],
         picture:"images/barberD.jpg",
+        unavailableDays: [2],
     },
 
 ];
+
+function updateCalendar(index){
+
+    function disableUnavailableDates(date) {
+        //get the day
+        var dayOfWeek = date.getDay();
+
+        //check if the date is an unavailable on efor the current barber
+        for (var j = 0; j < allBarbers[index].unavailableDays.length; j++) {
+            if (dayOfWeek == allBarbers[index].unavailableDays[j]) {
+
+                return [false, "unavailable-day"];
+            }
+        }
+        return [true, ""];
+    }
+
+    $("#inputDate4").datepicker({
+        beforeShowDay: disableUnavailableDates,
+        dateFormat: 'yy-mm-dd',
+        minDate: 0 // This prevents selecting past dates
+    });
+}
+
 
 function renderCards(){
     renderServiceCards();
@@ -209,9 +245,13 @@ function createBarberCard(barber) {
     link.textContent = 'Book now';
     link.addEventListener("click",()=>{
         barberName=barber.name;
+        barberId=barber.id;
         let appointmentContainer = document.getElementById("barberDetail");
         appointmentContainer.textContent=barberName;
-    })
+
+        // Update calendar based on the selected barber
+        updateCalendar(barberId);
+    });
 
     cardBody.appendChild(title);
     cardBody.appendChild(description);
@@ -298,40 +338,44 @@ $(document).ready(function(){
     });
 })
 
-$("#inputDate4").datepicker({
-    daysOfWeekDisabled: "1,2"
-});
-
-
 //check the payment method
 function checkPaymentMethod(){
-    ///^(\d{16})$/;
-    //inputField.value = "xx".repeat(inputField.value.length);
+
     const cardNumberPattern=/^(\d{4}[ ]?\d{4}[ ]?\d{4}[ ]?\d{4})$/;
     const cardCvcPatterm=/^(\d{3})$/;
     cardHolderName=$("#cardHolder").val();
     cardNumber=$("#cardNumber").val();
     cardCvc=$("#cardCvc").val();
 
+    //set the color to the message in red by default
+    $("#payment").css("color", "red");
+
+    //check the crad Number 
     if(!cardNumberPattern.test(cardNumber)){
-        $("#paymentError").text("OOPS!! Wrong card number");
-        $("#paymentError").show();
+        $("#payment").html("<i>Wrong card number</i>");
+        $("#payment").show();
         cardValidated=false;
         return false;
     }
+
+    //check the card cvc
     if(!cardCvcPatterm.test(cardCvc)){
-        $("#paymentError").text("OOPS!! Wrong CVC format");
-        $("#paymentError").show();
+        $("#payment").html("<i>Wrong CVC format</i>");
+        $("#payment").show();
         cardValidated=false;
         return false;
     }
+
+    //check if there is no empty input
     if(cardHolderName=="" || cardNumber=="" || cardCvc==""){
-        $("#paymentError").text("OOPS!! Complete payment method");
-        $("#paymentError").show();
+        $("#payment").html("<i>Complete payment method</i>");
+        $("#payment").show();
         cardValidated=false;
         return false;
     }
-    $("#paymentError").hide();
+    $("#payment").html("<i>Card validated</i>");
+    $("#payment").css("color", "rgb(53, 213, 82)");
+    $("#payment").show();
     cardValidated=true;
     //think about creating a green icon for validating payment
     return true;
@@ -340,6 +384,8 @@ function checkPaymentMethod(){
 
 //this is for the nav bar, highlights when we are on the area
 document.addEventListener('DOMContentLoaded', function () {
+
+
     // Get all the navigation links
     var navLinks = document.querySelectorAll('.navbar-nav a.nav-link');
 
